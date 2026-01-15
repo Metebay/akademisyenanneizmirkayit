@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yönetici Paneli - Akademisyen Anne</title>
+    <title>Yönetici Paneli - Akademisyen Anne İzmir</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
         body { font-family: 'Inter', sans-serif; }
         .fade-in { animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        /* Özel Renk Tanımları (#7cc939) */
+        /* ÖZEL RENK (#7cc939) */
         :root { --primary: #7cc939; --primary-hover: #6db333; }
         .bg-custom { background-color: var(--primary); }
         .bg-custom-hover:hover { background-color: var(--primary-hover); }
@@ -29,7 +29,7 @@
                     <i data-lucide="lock" class="w-8 h-8"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-slate-800">Yönetici Paneli</h2>
-                <p class="text-slate-500">Akademisyen Anne Anaokulu</p>
+                <p class="text-slate-500">Akademisyen Anne İzmir Anaokulu</p>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div class="relative">
@@ -109,18 +109,17 @@
                 </div>
 
                 <!-- Special Days -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-orange-100">
-                    <h3 class="font-bold text-lg mb-4 text-orange-600 flex items-center gap-2"><i data-lucide="calendar-clock"></i> Özel Gün Saatleri</h3>
-                    <div class="flex flex-col sm:flex-row gap-3 mb-6 bg-orange-50 p-4 rounded-lg">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-yellow-100">
+                    <h3 class="font-bold text-lg mb-4 text-yellow-600 flex items-center gap-2"><i data-lucide="calendar-clock"></i> Özel Gün Saatleri</h3>
+                    <div class="flex flex-col sm:flex-row gap-3 mb-6 bg-yellow-50 p-4 rounded-lg">
                         <input type="date" id="spec-date" class="border p-2 rounded flex-1">
                         <div class="flex gap-2 items-center">
                             <input type="time" id="spec-start" class="border p-2 rounded w-24" value="09:00"> 
-                            <span class="text-orange-400 font-bold">-</span>
+                            <span class="text-yellow-400 font-bold">-</span>
                             <input type="time" id="spec-end" class="border p-2 rounded w-24" value="13:00">
                         </div>
-                        <button onclick="addSpecialDay()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded font-bold transition-all">Ekle</button>
+                        <button onclick="addSpecialDay()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded font-bold transition-all">Ekle</button>
                     </div>
-                    <!-- Liste -->
                     <div id="special-days-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
 
@@ -224,7 +223,6 @@
             onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), (snap) => {
                 if (snap.exists()) {
                     const data = snap.data();
-                    // Güvenli veri birleştirme (Eğer DB'de bazı alanlar yoksa varsayılanı kullan)
                     settings = { 
                         start: data.start || "09:00", 
                         end: data.end || "17:00", 
@@ -240,7 +238,7 @@
         function renderAppointments() {
             const list = document.getElementById('appointments-list');
             list.innerHTML = '';
-            const sorted = appointments.sort((a,b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+            const sorted = appointments.sort((a,b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
             
             sorted.forEach(app => {
                 const tr = document.createElement('tr');
@@ -291,30 +289,27 @@
         };
 
         function renderSettings() {
-            // General
             document.getElementById('set-start').value = settings.start;
             document.getElementById('set-end').value = settings.end;
             document.getElementById('set-interval').value = settings.interval;
 
-            // Blocked List
             const bList = document.getElementById('blocked-days-list');
             bList.innerHTML = '';
             if (settings.blockedDates.length === 0) bList.innerHTML = '<p class="text-sm text-slate-400 col-span-3 text-center italic">Henüz kapalı gün eklenmedi.</p>';
-            settings.blockedDates.forEach(d => {
+            settings.blockedDates.sort().forEach(d => {
                 bList.innerHTML += `<div class="bg-white p-2 rounded border border-red-200 flex justify-between items-center text-sm text-slate-600"><span>${d}</span><button class="text-red-500" onclick="removeBlocked('${d}')"><i data-lucide="x" class="w-4 h-4"></i></button></div>`;
             });
 
-            // Special List
             const sList = document.getElementById('special-days-list');
             sList.innerHTML = '';
-            const specials = Object.entries(settings.customSchedules);
+            const specials = Object.entries(settings.customSchedules).sort();
             if (specials.length === 0) sList.innerHTML = '<p class="text-sm text-slate-400 col-span-2 text-center italic">Henüz özel gün eklenmedi.</p>';
             specials.forEach(([d, t]) => {
                 sList.innerHTML += `
-                    <div class="bg-white p-3 rounded border border-orange-200 flex justify-between items-center shadow-sm">
+                    <div class="bg-white p-3 rounded border border-yellow-200 flex justify-between items-center shadow-sm">
                         <div>
                             <div class="font-bold text-slate-700 text-sm">${d}</div>
-                            <div class="text-xs text-orange-600 font-bold bg-orange-50 px-2 py-0.5 rounded mt-1">${t.start} - ${t.end}</div>
+                            <div class="text-xs text-yellow-600 font-bold bg-yellow-50 px-2 py-0.5 rounded mt-1">${t.start} - ${t.end}</div>
                         </div>
                         <button class="text-slate-400 hover:text-red-500" onclick="removeSpecial('${d}')"><i data-lucide="x" class="w-4 h-4"></i></button>
                     </div>
