@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Paneli - Akademisyen Anne</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Özel Renk Tanımları (#7cc939) */
+        :root { --primary: #7cc939; --primary-hover: #6db333; }
+        .bg-custom { background-color: var(--primary); }
+        .bg-custom-hover:hover { background-color: var(--primary-hover); }
+        .text-custom { color: var(--primary); }
+        .border-custom { border-color: var(--primary); }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen">
+
+    <!-- Login View -->
+    <div id="view-login" class="flex items-center justify-center min-h-screen bg-slate-200">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-custom rounded-full mx-auto flex items-center justify-center text-white mb-4 shadow-lg">
+                    <i data-lucide="lock" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">Yönetici Paneli</h2>
+                <p class="text-slate-500">Akademisyen Anne Anaokulu</p>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div class="relative">
+                    <i data-lucide="mail" class="absolute left-3 top-3 text-slate-400 w-5 h-5"></i>
+                    <input type="email" id="email" placeholder="E-posta" class="w-full pl-10 p-3 border rounded-lg outline-none focus:border-custom focus:ring-1 focus:ring-custom" required>
+                </div>
+                <div class="relative">
+                    <i data-lucide="lock" class="absolute left-3 top-3 text-slate-400 w-5 h-5"></i>
+                    <input type="password" id="password" placeholder="Şifre" class="w-full pl-10 p-3 border rounded-lg outline-none focus:border-custom focus:ring-1 focus:ring-custom" required>
+                </div>
+                <button type="submit" id="login-btn" class="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-lg font-bold transition-all shadow-lg">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="view-dashboard" class="hidden min-h-screen flex flex-col md:flex-row">
+        <!-- Sidebar -->
+        <div class="w-full md:w-64 bg-slate-900 text-white p-6 flex flex-col">
+            <div class="mb-8 flex items-center gap-3">
+                <div class="w-8 h-8 bg-custom rounded-full flex items-center justify-center text-white font-bold">A</div>
+                <div>
+                    <h2 class="font-bold">Yönetim</h2>
+                    <p class="text-slate-400 text-xs">Akademisyen Anne</p>
+                </div>
+            </div>
+            <nav class="flex-1 space-y-2">
+                <button onclick="switchTab('appointments')" class="w-full flex items-center gap-3 p-3 rounded transition-colors hover:bg-slate-800 text-left" id="nav-appointments">
+                    <i data-lucide="calendar" class="w-5 h-5 text-custom"></i> Randevular
+                </button>
+                <button onclick="switchTab('settings')" class="w-full flex items-center gap-3 p-3 rounded transition-colors hover:bg-slate-800 text-left" id="nav-settings">
+                    <i data-lucide="settings" class="w-5 h-5 text-custom"></i> Ayarlar
+                </button>
+            </nav>
+            <button onclick="handleLogout()" class="mt-auto pt-8 border-t border-slate-700 flex items-center gap-2 text-slate-400 hover:text-white">
+                <i data-lucide="log-out" class="w-5 h-5"></i> Çıkış Yap
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1 p-8 overflow-y-auto">
+            
+            <!-- Appointments Tab -->
+            <div id="tab-appointments" class="tab-content fade-in">
+                <h2 class="text-2xl font-bold mb-6 text-slate-800">Randevu Listesi</h2>
+                <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-50 border-b">
+                            <tr>
+                                <th class="p-4 font-semibold text-slate-600">Tarih</th>
+                                <th class="p-4 font-semibold text-slate-600">Veli</th>
+                                <th class="p-4 font-semibold text-slate-600">Öğrenci</th>
+                                <th class="p-4 text-right">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointments-list" class="divide-y"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="tab-settings" class="tab-content hidden fade-in space-y-8 max-w-3xl">
+                <!-- General -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border">
+                    <h3 class="font-bold text-lg mb-4 text-slate-800 flex items-center gap-2"><i data-lucide="clock" class="text-custom"></i> Genel Çalışma Saatleri</h3>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div><label class="text-sm block mb-1 font-medium">Başlangıç</label><input type="time" id="set-start" class="border p-2 w-full rounded focus:border-custom focus:ring-1 focus:ring-custom outline-none"></div>
+                        <div><label class="text-sm block mb-1 font-medium">Bitiş</label><input type="time" id="set-end" class="border p-2 w-full rounded focus:border-custom focus:ring-1 focus:ring-custom outline-none"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-sm block mb-1 font-medium">Periyot (dk)</label>
+                        <select id="set-interval" class="border p-2 w-full rounded focus:border-custom focus:ring-1 focus:ring-custom outline-none">
+                            <option value="15">15</option><option value="30">30</option><option value="45">45</option><option value="60">60</option>
+                        </select>
+                    </div>
+                    <button onclick="saveSettings()" class="bg-custom bg-custom-hover text-white px-4 py-2 rounded font-bold w-full transition-all">Genel Ayarları Kaydet</button>
+                </div>
+
+                <!-- Special Days -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-orange-100">
+                    <h3 class="font-bold text-lg mb-4 text-orange-600 flex items-center gap-2"><i data-lucide="calendar-clock"></i> Özel Gün Saatleri</h3>
+                    <div class="flex flex-col sm:flex-row gap-3 mb-6 bg-orange-50 p-4 rounded-lg">
+                        <input type="date" id="spec-date" class="border p-2 rounded flex-1">
+                        <div class="flex gap-2 items-center">
+                            <input type="time" id="spec-start" class="border p-2 rounded w-24" value="09:00"> 
+                            <span class="text-orange-400 font-bold">-</span>
+                            <input type="time" id="spec-end" class="border p-2 rounded w-24" value="13:00">
+                        </div>
+                        <button onclick="addSpecialDay()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded font-bold transition-all">Ekle</button>
+                    </div>
+                    <!-- Liste -->
+                    <div id="special-days-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                </div>
+
+                <!-- Blocked Days -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-red-100">
+                    <h3 class="font-bold text-lg mb-4 text-red-600 flex items-center gap-2"><i data-lucide="ban"></i> Tamamen Kapalı Günler</h3>
+                    <div class="flex gap-2 mb-4 bg-red-50 p-4 rounded-lg">
+                        <input type="date" id="block-date" class="border p-2 flex-1 rounded">
+                        <button onclick="addBlockedDate()" class="bg-red-600 hover:bg-red-700 text-white px-4 rounded font-bold flex items-center gap-2 transition-all"><i data-lucide="plus" class="w-4 h-4"></i> Ekle</button>
+                    </div>
+                    <div id="blocked-days-list" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Detay Modal -->
+    <div id="detail-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl w-full max-w-md overflow-hidden animate-fadeIn">
+            <div class="bg-slate-900 p-4 text-white flex justify-between items-center">
+                <h3 class="font-bold">Randevu Detayı</h3>
+                <button onclick="closeModal()"><i data-lucide="x"></i></button>
+            </div>
+            <div id="modal-content" class="p-6 space-y-4"></div>
+        </div>
+    </div>
+
+    <div id="notification" class="fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white transform transition-all duration-300 z-50 translate-y-20 opacity-0"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, deleteDoc, query, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC-NozhF3X1NgX4ZSaXHMTR2n0vCoZbstY",
+            authDomain: "anaokulu-e728c.firebaseapp.com",
+            projectId: "anaokulu-e728c",
+            storageBucket: "anaokulu-e728c.firebasestorage.app",
+            messagingSenderId: "722320031337",
+            appId: "1:722320031337:web:cfaaa2bc2ae22e0fd0acf8",
+            measurementId: "G-L9V6S50C89"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'anaokulu-yonetim';
+
+        // Varsayılan ayarlar (DB boşsa bunlar kullanılır)
+        let settings = { start: "09:00", end: "17:00", interval: "30", blockedDates: [], customSchedules: {} };
+        let appointments = [];
+
+        const showToast = (msg, type = 'success') => {
+            const el = document.getElementById('notification');
+            el.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white transform transition-all duration-300 z-50 ${type === 'error' ? 'bg-red-600' : 'bg-green-600'}`;
+            el.textContent = msg;
+            el.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => el.classList.add('translate-y-20', 'opacity-0'), 3000);
+        };
+
+        window.handleLogin = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('login-btn');
+            btn.textContent = 'Giriş Yapılıyor...';
+            try {
+                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
+                showToast('Giriş Başarılı');
+            } catch (err) {
+                showToast('Giriş Başarısız: ' + err.code, 'error');
+                btn.textContent = 'Giriş Yap';
+            }
+        };
+
+        window.handleLogout = () => signOut(auth);
+
+        window.switchTab = (tab) => {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('bg-slate-800'));
+            document.getElementById(`nav-${tab}`).classList.add('bg-slate-800');
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('view-login').classList.add('hidden');
+                document.getElementById('view-dashboard').classList.remove('hidden');
+                initData();
+            } else {
+                document.getElementById('view-login').classList.remove('hidden');
+                document.getElementById('view-dashboard').classList.add('hidden');
+            }
+        });
+
+        function initData() {
+            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments')), (snap) => {
+                appointments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderAppointments();
+            });
+            onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), (snap) => {
+                if (snap.exists()) {
+                    const data = snap.data();
+                    // Güvenli veri birleştirme (Eğer DB'de bazı alanlar yoksa varsayılanı kullan)
+                    settings = { 
+                        start: data.start || "09:00", 
+                        end: data.end || "17:00", 
+                        interval: data.interval || "30", 
+                        blockedDates: data.blockedDates || [], 
+                        customSchedules: data.customSchedules || {} 
+                    };
+                    renderSettings();
+                }
+            });
+        }
+
+        function renderAppointments() {
+            const list = document.getElementById('appointments-list');
+            list.innerHTML = '';
+            const sorted = appointments.sort((a,b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+            
+            sorted.forEach(app => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 border-b';
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <div class="font-bold text-slate-800">${app.date}</div>
+                        <span class="text-xs bg-custom text-white px-2 py-1 rounded font-bold">${app.time}</span>
+                    </td>
+                    <td class="p-4">
+                        <div class="font-medium">${app.parentName}</div>
+                        <div class="text-xs text-slate-500">${app.phone}</div>
+                    </td>
+                    <td class="p-4 text-slate-600">${app.childName}</td>
+                    <td class="p-4 text-right flex justify-end gap-2">
+                        <button onclick="showDetail('${app.id}')" class="text-custom hover:opacity-80"><i data-lucide="eye" class="w-5 h-5"></i></button>
+                        <button onclick="deleteApp('${app.id}')" class="text-slate-400 hover:text-red-600"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                    </td>
+                `;
+                list.appendChild(tr);
+            });
+            lucide.createIcons();
+        }
+
+        window.showDetail = (id) => {
+            const app = appointments.find(a => a.id === id);
+            if(!app) return;
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <div class="grid grid-cols-2 gap-4 border-b pb-4">
+                    <div><span class="text-xs font-bold text-slate-400 block">TARİH</span>${app.date}</div>
+                    <div><span class="text-xs font-bold text-slate-400 block">SAAT</span>${app.time}</div>
+                </div>
+                <div><span class="text-xs font-bold text-slate-400 block">VELİ</span>${app.parentName} <br/><span class="text-sm text-slate-500">${app.phone}</span></div>
+                <div><span class="text-xs font-bold text-slate-400 block">ÖĞRENCİ</span>${app.childName} (${app.gender}) - ${app.childBirthDate}</div>
+                <div class="bg-yellow-50 p-3 rounded text-sm border border-yellow-100"><span class="font-bold block text-yellow-700">Notlar:</span>${app.notes || '-'}</div>
+            `;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        };
+
+        window.closeModal = () => document.getElementById('detail-modal').classList.add('hidden');
+
+        window.deleteApp = async (id) => {
+            if(confirm('Silmek istiyor musunuz?')) {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'appointments', id));
+                showToast('Silindi');
+            }
+        };
+
+        function renderSettings() {
+            // General
+            document.getElementById('set-start').value = settings.start;
+            document.getElementById('set-end').value = settings.end;
+            document.getElementById('set-interval').value = settings.interval;
+
+            // Blocked List
+            const bList = document.getElementById('blocked-days-list');
+            bList.innerHTML = '';
+            if (settings.blockedDates.length === 0) bList.innerHTML = '<p class="text-sm text-slate-400 col-span-3 text-center italic">Henüz kapalı gün eklenmedi.</p>';
+            settings.blockedDates.forEach(d => {
+                bList.innerHTML += `<div class="bg-white p-2 rounded border border-red-200 flex justify-between items-center text-sm text-slate-600"><span>${d}</span><button class="text-red-500" onclick="removeBlocked('${d}')"><i data-lucide="x" class="w-4 h-4"></i></button></div>`;
+            });
+
+            // Special List
+            const sList = document.getElementById('special-days-list');
+            sList.innerHTML = '';
+            const specials = Object.entries(settings.customSchedules);
+            if (specials.length === 0) sList.innerHTML = '<p class="text-sm text-slate-400 col-span-2 text-center italic">Henüz özel gün eklenmedi.</p>';
+            specials.forEach(([d, t]) => {
+                sList.innerHTML += `
+                    <div class="bg-white p-3 rounded border border-orange-200 flex justify-between items-center shadow-sm">
+                        <div>
+                            <div class="font-bold text-slate-700 text-sm">${d}</div>
+                            <div class="text-xs text-orange-600 font-bold bg-orange-50 px-2 py-0.5 rounded mt-1">${t.start} - ${t.end}</div>
+                        </div>
+                        <button class="text-slate-400 hover:text-red-500" onclick="removeSpecial('${d}')"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        window.saveSettings = async () => {
+            const newS = { 
+                ...settings, 
+                start: document.getElementById('set-start').value, 
+                end: document.getElementById('set-end').value, 
+                interval: document.getElementById('set-interval').value 
+            };
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), newS);
+            showToast('Kaydedildi');
+        };
+
+        window.addBlockedDate = async () => {
+            const d = document.getElementById('block-date').value;
+            if(!d || settings.blockedDates.includes(d)) return;
+            const newCustom = {...settings.customSchedules}; delete newCustom[d];
+            const newS = { ...settings, blockedDates: [...settings.blockedDates, d].sort(), customSchedules: newCustom };
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), newS);
+            document.getElementById('block-date').value = '';
+        };
+
+        window.removeBlocked = async (d) => {
+            const newS = { ...settings, blockedDates: settings.blockedDates.filter(x => x !== d) };
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), newS);
+        };
+
+        window.addSpecialDay = async () => {
+            const d = document.getElementById('spec-date').value;
+            const s = document.getElementById('spec-start').value;
+            const e = document.getElementById('spec-end').value;
+            if(!d || !s || !e) return showToast('Lütfen tarih ve saatleri seçiniz', 'error');
+            
+            const newBlocked = settings.blockedDates.filter(x => x !== d);
+            const newS = { 
+                ...settings, 
+                blockedDates: newBlocked, 
+                customSchedules: { ...settings.customSchedules, [d]: { start: s, end: e } } 
+            };
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), newS);
+            document.getElementById('spec-date').value = '';
+        };
+
+        window.removeSpecial = async (d) => {
+            const newC = { ...settings.customSchedules }; delete newC[d];
+            const newS = { ...settings, customSchedules: newC };
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), newS);
+        };
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
