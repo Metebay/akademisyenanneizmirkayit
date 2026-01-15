@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yönetici Paneli - Akademisyen Anne İzmir</title>
+    <title>Yönetici Paneli - Akademisyen Anne</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
                     <i data-lucide="lock" class="w-8 h-8"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-slate-800">Yönetici Paneli</h2>
-                <p class="text-slate-500">Akademisyen Anne İzmir Anaokulu</p>
+                <p class="text-slate-500">Akademisyen Anne Anaokulu</p>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div class="relative">
@@ -153,7 +153,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, deleteDoc, query, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        // GÜNCELLEME: setPersistence ve browserSessionPersistence eklendi
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC-NozhF3X1NgX4ZSaXHMTR2n0vCoZbstY",
@@ -170,7 +171,15 @@
         const auth = getAuth(app);
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'anaokulu-yonetim';
 
-        // Varsayılan ayarlar (DB boşsa bunlar kullanılır)
+        // GÜNCELLEME: Oturumu sadece tarayıcı sekmesi açıkken tut (Kapanınca çıkış yap)
+        setPersistence(auth, browserSessionPersistence)
+            .then(() => {
+                // Persistence ayarlandı
+            })
+            .catch((error) => {
+                console.error("Auth Persistence Error:", error);
+            });
+
         let settings = { start: "09:00", end: "17:00", interval: "30", blockedDates: [], customSchedules: {} };
         let appointments = [];
 
