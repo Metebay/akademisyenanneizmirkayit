@@ -2,13 +2,13 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akademisyen Anne İzmir Anaokulu - Erken Kayıt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Akademisyen Anne Anaokulu - Kayıt</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         .fade-in { animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -16,7 +16,7 @@
         :root {
             --primary: #7cc939; 
             --primary-hover: #6db333;
-            --primary-light: #f0fdf4; /* Light green tint */
+            --primary-light: #f0fdf4;
         }
         
         .bg-custom { background-color: var(--primary); }
@@ -25,6 +25,9 @@
         .border-custom { border-color: var(--primary); }
         .ring-custom { --tw-ring-color: var(--primary); }
         .bg-custom-light { background-color: var(--primary-light); }
+
+        /* Mobil Input Zoom Engelleme */
+        input, select, textarea { font-size: 16px !important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -32,61 +35,61 @@
     <!-- Navbar -->
     <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-4 cursor-pointer" onclick="router('home')">
-                    <div class="h-14 flex items-center gap-3">
-                        <div class="w-12 h-12 bg-custom rounded-full flex items-center justify-center text-white shadow-md">
-                            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h1 class="text-xl font-bold text-slate-900 leading-none">Akademisyen Anne</h1>
-                            <p class="text-xs text-custom font-bold tracking-widest mt-1">İZMİR ANAOKULU</p>
-                        </div>
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="router('home')">
+                    <div class="w-10 h-10 bg-custom rounded-full flex items-center justify-center text-white shadow-md flex-shrink-0">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-slate-900 leading-none">Akademisyen Anne</h1>
+                        <p class="text-[10px] text-custom font-bold tracking-widest mt-0.5">ANAOKULU</p>
                     </div>
                 </div>
                 
-                <!-- Yönetici Linki Kaldırıldı -->
+                <a href="admin.html" class="text-slate-400 hover:text-custom p-2">
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                </a>
             </div>
         </div>
     </nav>
 
-    <main class="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 relative">
+    <main class="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 relative">
         
         <!-- View: Home -->
         <div id="view-home" class="view-section fade-in">
-            <div class="flex flex-col items-center justify-center py-12 text-center space-y-8">
-                <div class="space-y-6 max-w-3xl">
-                    <div class="inline-flex items-center gap-2 bg-custom-light text-custom px-4 py-2 rounded-full text-sm font-bold mb-4 border border-custom">
-                        <i data-lucide="calendar" class="w-4 h-4"></i> 2026-2027 Erken Kayıt Dönemi
+            <div class="flex flex-col items-center justify-center py-8 text-center space-y-6">
+                <div class="space-y-4 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 bg-custom-light text-custom px-3 py-1.5 rounded-full text-xs font-bold border border-custom">
+                        <i data-lucide="calendar" class="w-3 h-3"></i> 2024-2025 Kayıtları
                     </div>
-                    <h2 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <h2 class="text-3xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
                         Geleceğin Akademisyenleri <br/>
                         <span class="text-custom">Burada Yetişiyor</span>
                     </h2>
-                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-                        Akademisyen Anne Anaokulu olarak çocuklarımıza bilimsel ve sevgi dolu bir eğitim sunuyoruz.
+                    <p class="text-base text-slate-600 max-w-md mx-auto">
+                        Çocuklarınıza bilimsel ve sevgi dolu bir eğitim sunuyoruz. Hemen yerinizi ayırtın.
                     </p>
                 </div>
-                <button onclick="router('booking')" class="bg-custom bg-custom-hover text-white font-bold py-4 px-10 rounded-xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 text-lg transform hover:-translate-y-1">
+                
+                <button onclick="router('booking')" class="w-full sm:w-auto bg-custom active:bg-green-700 md:hover:bg-green-600 text-white font-bold py-4 px-10 rounded-xl shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-3 text-lg">
                     <i data-lucide="calendar-check" class="w-6 h-6"></i>
                     Randevu Oluştur
                 </button>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 w-full text-left">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all group">
-                        <div class="mb-4 bg-slate-50 w-12 h-12 rounded-lg flex items-center justify-center text-custom group-hover:bg-custom group-hover:text-white transition-colors"><i data-lucide="graduation-cap"></i></div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-2">Akademik Eğitim</h3>
-                        <p class="text-slate-600 text-sm">Bilimsel temelli modern eğitim modelleri.</p>
+                <div class="grid grid-cols-1 gap-4 mt-8 w-full">
+                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4">
+                        <div class="bg-slate-50 w-12 h-12 rounded-lg flex items-center justify-center text-custom shrink-0"><i data-lucide="graduation-cap"></i></div>
+                        <div class="text-left">
+                            <h3 class="font-bold text-slate-800">Akademik Eğitim</h3>
+                            <p class="text-slate-500 text-xs">Bilimsel temelli modern eğitim.</p>
+                        </div>
                     </div>
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all group">
-                        <div class="mb-4 bg-slate-50 w-12 h-12 rounded-lg flex items-center justify-center text-custom group-hover:bg-custom group-hover:text-white transition-colors"><i data-lucide="check-circle"></i></div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-2">Kolay Kayıt</h3>
-                        <p class="text-slate-600 text-sm">Hızlı ve pratik online randevu sistemi.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all group">
-                        <div class="mb-4 bg-slate-50 w-12 h-12 rounded-lg flex items-center justify-center text-custom group-hover:bg-custom group-hover:text-white transition-colors"><i data-lucide="shield"></i></div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-2">Güvenli Ortam</h3>
-                        <p class="text-slate-600 text-sm">Çocuklarınız için en güvenli alanlar.</p>
+                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4">
+                        <div class="bg-slate-50 w-12 h-12 rounded-lg flex items-center justify-center text-green-600 shrink-0"><i data-lucide="check-circle"></i></div>
+                        <div class="text-left">
+                            <h3 class="font-bold text-slate-800">Kolay Kayıt</h3>
+                            <p class="text-slate-500 text-xs">Hızlı online randevu sistemi.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,83 +97,110 @@
 
         <!-- View: Booking -->
         <div id="view-booking" class="view-section hidden fade-in">
-            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden max-w-3xl mx-auto">
-                <div class="bg-custom p-6 text-white flex justify-between items-center">
-                    <h3 class="text-xl font-bold flex items-center gap-2"><i data-lucide="calendar"></i> Randevu Formu</h3>
-                    <button onclick="router('home')" class="bg-white/10 hover:bg-white/20 p-2 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden max-w-3xl mx-auto mb-20"> <!-- mb-20 for safe area -->
+                <div class="bg-custom p-4 text-white flex justify-between items-center sticky top-0 z-10">
+                    <h3 class="text-lg font-bold flex items-center gap-2"><i data-lucide="calendar"></i> Randevu Formu</h3>
+                    <button onclick="router('home')" class="bg-white/20 p-1.5 rounded-full active:scale-90 transition-transform"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
                 
-                <div class="p-8" id="booking-container">
+                <div class="p-5 md:p-8" id="booking-container">
                     <!-- Steps Indicator -->
-                    <div class="flex items-center mb-8 text-sm font-bold text-slate-400">
-                        <div class="flex items-center gap-2 text-custom step-1-ind">
-                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-custom bg-custom-light">1</span> Zaman
+                    <div class="flex items-center justify-between mb-6 text-xs font-bold text-slate-400">
+                        <div class="flex flex-col items-center gap-1 text-custom step-1-ind w-1/3">
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-custom bg-custom-light text-sm transition-colors">1</span> Zaman
                         </div>
-                        <div class="flex-1 h-0.5 bg-slate-200 mx-4"></div>
-                        <div class="flex items-center gap-2 step-2-ind">
-                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-slate-300">2</span> Veli
+                        <div class="h-0.5 bg-slate-200 w-full mx-2"></div>
+                        <div class="flex flex-col items-center gap-1 step-2-ind w-1/3">
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-slate-300 text-sm transition-colors">2</span> Veli
                         </div>
-                        <div class="flex-1 h-0.5 bg-slate-200 mx-4"></div>
-                        <div class="flex items-center gap-2 step-3-ind">
-                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-slate-300">3</span> Öğrenci
+                        <div class="h-0.5 bg-slate-200 w-full mx-2"></div>
+                        <div class="flex flex-col items-center gap-1 step-3-ind w-1/3">
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-slate-300 text-sm transition-colors">3</span> Öğrenci
                         </div>
                     </div>
 
                     <!-- Step 1: Date/Time -->
                     <div id="step-1">
-                        <h4 class="font-bold text-lg text-slate-700 mb-3 flex items-center gap-2">
+                        <h4 class="font-bold text-base text-slate-700 mb-3 flex items-center gap-2">
                             <i data-lucide="calendar-days" class="w-5 h-5 text-slate-400"></i> Tarih Seçin
                         </h4>
-                        <div id="date-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
-                            <div class="col-span-3 text-center text-slate-400 py-4 italic">Takvim yükleniyor...</div>
+                        <!-- Mobile: Grid 2 cols, Desktop: Grid 3 cols -->
+                        <div id="date-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                            <div class="col-span-full text-center text-slate-400 py-4 italic">Takvim yükleniyor...</div>
                         </div>
 
-                        <div id="time-section" class="hidden animate-fadeIn">
-                            <h4 class="font-bold text-lg text-slate-700 mb-3 flex items-center gap-2 border-t pt-6">
+                        <div id="time-section" class="hidden animate-fadeIn pb-20">
+                            <h4 class="font-bold text-base text-slate-700 mb-3 flex items-center gap-2 border-t pt-6">
                                 <i data-lucide="clock" class="w-5 h-5 text-slate-400"></i> Saat Seçin
-                                <span id="custom-hours-badge" class="hidden text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded ml-auto font-bold"></span>
+                                <span id="custom-hours-badge" class="hidden text-[10px] bg-yellow-100 text-yellow-700 px-2 py-1 rounded ml-auto font-bold uppercase tracking-wider">Özel Saat</span>
                             </h4>
-                            <div id="time-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-60 overflow-y-auto pr-1">
+                            <div id="time-grid" class="grid grid-cols-3 gap-3 max-h-60 overflow-y-auto pr-1">
                                 <!-- JS ile doldurulacak -->
                             </div>
                         </div>
                         
-                        <div class="flex justify-end pt-6 mt-4 border-t">
-                            <button id="btn-step-1-next" onclick="nextStep(2)" disabled class="bg-custom bg-custom-hover text-white px-8 py-3 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all">Devam Et</button>
+                        <!-- Sticky Bottom Button on Mobile -->
+                        <div class="fixed bottom-0 left-0 w-full bg-white border-t p-4 md:static md:bg-transparent md:border-0 md:p-0 md:pt-6 md:mt-4 z-40">
+                            <button id="btn-step-1-next" onclick="nextStep(2)" disabled class="w-full bg-custom active:bg-green-700 md:hover:bg-green-600 text-white px-8 py-4 md:py-3 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transition-all text-lg md:text-base">Devam Et</button>
                         </div>
                     </div>
 
                     <!-- Step 2: Parent Info -->
-                    <div id="step-2" class="hidden">
-                        <h4 class="font-bold text-lg border-b pb-2 mb-4">Veli Bilgileri</h4>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" id="inp-parentName" placeholder="Veli Adı Soyadı *" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
-                            <input type="tel" id="inp-phone" placeholder="Telefon *" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
-                            <input type="email" id="inp-email" placeholder="E-posta" class="p-3 border rounded-lg w-full md:col-span-2 focus:ring-2 ring-custom outline-none">
+                    <div id="step-2" class="hidden pb-20">
+                        <h4 class="font-bold text-lg border-b pb-2 mb-4 text-slate-800">Veli Bilgileri</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 uppercase ml-1">Ad Soyad</label>
+                                <input type="text" id="inp-parentName" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 ring-custom focus:bg-white outline-none transition-all" placeholder="Örn: Ahmet Yılmaz">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 uppercase ml-1">Telefon</label>
+                                <input type="tel" id="inp-phone" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 ring-custom focus:bg-white outline-none transition-all" placeholder="05XX XXX XX XX">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 uppercase ml-1">E-Posta</label>
+                                <input type="email" id="inp-email" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 ring-custom focus:bg-white outline-none transition-all" placeholder="ornek@mail.com">
+                            </div>
                         </div>
-                        <div class="flex justify-between pt-6">
-                            <button onclick="prevStep(1)" class="text-slate-500 font-bold px-4">Geri</button>
-                            <button onclick="nextStep(3)" class="bg-custom bg-custom-hover text-white px-6 py-3 rounded-lg font-bold">Devam Et</button>
+                        
+                        <div class="fixed bottom-0 left-0 w-full bg-white border-t p-4 md:static md:bg-transparent md:border-0 md:p-0 md:pt-6 flex gap-3 z-40">
+                            <button onclick="prevStep(1)" class="flex-1 md:flex-none text-slate-500 font-bold px-4 py-3 bg-slate-100 rounded-xl">Geri</button>
+                            <button onclick="nextStep(3)" class="flex-[2] md:flex-none bg-custom text-white px-6 py-3 rounded-xl font-bold shadow-lg">Devam Et</button>
                         </div>
                     </div>
 
                     <!-- Step 3: Student Info -->
-                    <div id="step-3" class="hidden">
-                        <h4 class="font-bold text-lg border-b pb-2 mb-4">Öğrenci Bilgileri</h4>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" id="inp-childName" placeholder="Öğrenci Adı Soyadı *" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
-                            <input type="date" id="inp-childBirthDate" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
-                            <select id="inp-gender" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
-                                <option value="Belirtilmedi">Cinsiyet Seçiniz</option>
-                                <option value="Kız">Kız</option>
-                                <option value="Erkek">Erkek</option>
-                            </select>
-                            <textarea id="inp-notes" placeholder="Eklemek istediğiniz notlar var mı?" class="p-3 border rounded-lg w-full md:col-span-2 focus:ring-2 ring-custom outline-none" rows="3"></textarea>
+                    <div id="step-3" class="hidden pb-20">
+                        <h4 class="font-bold text-lg border-b pb-2 mb-4 text-slate-800">Öğrenci Bilgileri</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 uppercase ml-1">Öğrenci Ad Soyad</label>
+                                <input type="text" id="inp-childName" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 ring-custom focus:bg-white outline-none">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Doğum Tarihi</label>
+                                    <input type="date" id="inp-childBirthDate" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 ring-custom outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Cinsiyet</label>
+                                    <select id="inp-gender" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 ring-custom outline-none">
+                                        <option value="Belirtilmedi">Seçiniz</option>
+                                        <option value="Kız">Kız</option>
+                                        <option value="Erkek">Erkek</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 uppercase ml-1">Notlar</label>
+                                <textarea id="inp-notes" placeholder="Varsa eklemek istedikleriniz..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 ring-custom focus:bg-white outline-none" rows="3"></textarea>
+                            </div>
                         </div>
-                        <div class="flex justify-between pt-6">
-                            <button onclick="prevStep(2)" class="text-slate-500 font-bold px-4">Geri</button>
-                            <button onclick="submitBooking()" id="btn-submit" class="bg-custom bg-custom-hover text-white px-8 py-3 rounded-lg font-bold flex items-center gap-2">
-                                Randevuyu Onayla <i data-lucide="check-circle" class="w-5 h-5"></i>
+
+                        <div class="fixed bottom-0 left-0 w-full bg-white border-t p-4 md:static md:bg-transparent md:border-0 md:p-0 md:pt-6 flex gap-3 z-40">
+                            <button onclick="prevStep(2)" class="flex-1 md:flex-none text-slate-500 font-bold px-4 py-3 bg-slate-100 rounded-xl">Geri</button>
+                            <button onclick="submitBooking()" id="btn-submit" class="flex-[2] md:flex-none bg-custom active:bg-green-700 text-white px-8 py-3 rounded-xl font-bold flex justify-center items-center gap-2 shadow-lg">
+                                Onayla <i data-lucide="check-circle" class="w-5 h-5"></i>
                             </button>
                         </div>
                     </div>
@@ -179,7 +209,7 @@
         </div>
     </main>
 
-    <div id="notification" class="fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white transform transition-all duration-300 z-50 translate-y-20 opacity-0"></div>
+    <div id="notification" class="fixed top-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full shadow-xl text-white transform transition-all duration-300 z-[60] -translate-y-20 opacity-0 text-sm font-bold whitespace-nowrap"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -205,7 +235,7 @@
         let appointments = [];
         let bookingData = { date: '', time: '' };
 
-        // --- YEREL SAAT TARİH FORMATLAYICI (HATA ÇÖZÜMÜ) ---
+        // --- YEREL SAAT TARİH FORMATLAYICI ---
         const formatDateLocal = (date) => {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -215,10 +245,10 @@
 
         const showToast = (msg, type = 'success') => {
             const el = document.getElementById('notification');
-            el.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white transform transition-all duration-300 z-50 ${type === 'error' ? 'bg-red-600' : 'bg-green-600'}`;
+            el.className = `fixed top-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full shadow-xl text-white transform transition-all duration-300 z-[60] text-sm font-bold whitespace-nowrap ${type === 'error' ? 'bg-red-600' : 'bg-green-600'}`;
             el.textContent = msg;
-            el.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => el.classList.add('translate-y-20', 'opacity-0'), 3000);
+            el.classList.remove('-translate-y-20', 'opacity-0');
+            setTimeout(() => el.classList.add('-translate-y-20', 'opacity-0'), 3000);
         };
 
         window.router = (viewName) => {
@@ -229,8 +259,16 @@
         };
 
         window.nextStep = (step) => {
+            if(step === 2 && (!bookingData.date || !bookingData.time)) {
+                return showToast('Lütfen önce tarih ve saat seçiniz.', 'error');
+            }
+
             document.querySelectorAll('[id^="step-"]').forEach(el => el.classList.add('hidden'));
             document.getElementById(`step-${step}`).classList.remove('hidden');
+            
+            // Scroll to top
+            window.scrollTo(0,0);
+
             if(step === 2) {
                 document.querySelector('.step-2-ind').classList.add('text-custom');
                 document.querySelector('.step-2-ind span').classList.replace('border-slate-300', 'border-custom');
@@ -250,14 +288,18 @@
 
         window.selectDate = (dateStr) => {
             bookingData.date = dateStr;
-            bookingData.time = '';
+            bookingData.time = ''; // Reset time
             
+            // Butonu pasif yap
+            const nextBtn = document.getElementById('btn-step-1-next');
+            if(nextBtn) nextBtn.disabled = true;
+
             document.querySelectorAll('.date-btn').forEach(btn => {
-                btn.className = `date-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all h-24 relative overflow-hidden bg-white border-slate-200 text-slate-600 hover:border-custom hover:bg-custom-light`;
+                btn.className = `date-btn flex flex-col items-center justify-center p-2 rounded-xl border-2 transition-all h-20 relative overflow-hidden bg-white border-slate-200 text-slate-600 hover:border-custom active:scale-95`;
             });
             const selectedBtn = document.querySelector(`button[data-date="${dateStr}"]`);
             if(selectedBtn) {
-                selectedBtn.className = `date-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all h-24 relative overflow-hidden bg-custom-light border-custom text-custom ring-2 ring-custom ring-offset-1 transform scale-105 shadow-md`;
+                selectedBtn.className = `date-btn flex flex-col items-center justify-center p-2 rounded-xl border-2 transition-all h-20 relative overflow-hidden bg-custom-light border-custom text-custom ring-2 ring-custom ring-offset-1 shadow-md`;
             }
             renderTimeSlots();
         };
@@ -265,13 +307,15 @@
         window.selectTime = (timeStr) => {
             bookingData.time = timeStr;
             document.querySelectorAll('.time-btn').forEach(btn => {
-                btn.className = `time-btn p-3 rounded-lg font-bold border transition-all text-center bg-white border-slate-200 hover:border-custom hover:bg-custom-light text-slate-700`;
+                btn.className = `time-btn p-3 rounded-lg font-bold border transition-all text-center bg-white border-slate-200 text-slate-700 active:scale-95`;
             });
             const selectedBtn = document.querySelector(`button[data-time="${timeStr}"]`);
             if(selectedBtn) {
-                selectedBtn.className = `time-btn p-3 rounded-lg font-bold border transition-all text-center bg-custom text-white border-transparent shadow-md`;
+                selectedBtn.className = `time-btn p-3 rounded-lg font-bold border transition-all text-center bg-custom text-white border-transparent shadow-md transform scale-105`;
             }
-            document.getElementById('btn-step-1-next').disabled = false;
+            // Enable Next Button
+            const nextBtn = document.getElementById('btn-step-1-next');
+            if(nextBtn) nextBtn.disabled = false;
         };
 
         window.submitBooking = async () => {
@@ -281,7 +325,8 @@
             if(!pName || !phone) return showToast('Lütfen zorunlu alanları doldurun', 'error');
 
             btn.disabled = true;
-            btn.textContent = 'Kaydediliyor...';
+            btn.innerHTML = 'Kaydediliyor... <i data-lucide="loader" class="w-5 h-5 animate-spin"></i>';
+            lucide.createIcons();
 
             const data = {
                 ...bookingData,
@@ -304,6 +349,8 @@
                 console.error(e);
                 showToast('Hata oluştu: ' + e.message, 'error');
                 btn.disabled = false;
+                btn.innerHTML = 'Onayla <i data-lucide="check-circle" class="w-5 h-5"></i>';
+                lucide.createIcons();
             }
         };
 
@@ -317,12 +364,10 @@
                 const d = new Date(today);
                 d.setDate(today.getDate() + i);
                 
-                // YENİ: Yerel tarih stringi kullan (UTC hatasını çözer)
                 const dateStr = formatDateLocal(d);
-                
                 const dayNum = d.getDate();
                 const month = d.toLocaleDateString('tr-TR', { month: 'short' });
-                const dayName = d.toLocaleDateString('tr-TR', { weekday: 'long' });
+                const dayName = d.toLocaleDateString('tr-TR', { weekday: 'long' }); // Mobilde uzun olabilir, CSS ile kesebiliriz
                 
                 const isBlocked = globalSettings.blockedDates.includes(dateStr);
                 const hasCustom = globalSettings.customSchedules[dateStr];
@@ -331,20 +376,20 @@
                 btn.dataset.date = dateStr;
                 btn.disabled = isBlocked;
                 
-                let btnClass = `date-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all h-24 relative overflow-hidden `;
-                if(isBlocked) btnClass += 'bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed';
-                else btnClass += 'bg-white border-slate-200 text-slate-600 hover:border-custom hover:bg-custom-light';
+                let btnClass = `date-btn flex flex-col items-center justify-center p-2 rounded-xl border-2 transition-all h-20 relative overflow-hidden `;
+                if(isBlocked) btnClass += 'bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed opacity-60';
+                else btnClass += 'bg-white border-slate-200 text-slate-600 active:scale-95';
                 
                 btn.className = btnClass;
                 
                 if (!isBlocked && hasCustom) {
-                    btn.innerHTML += `<div class="absolute top-0 right-0 bg-yellow-500 text-white text-[9px] px-2 py-0.5 rounded-bl-lg font-bold">ÖZEL</div>`;
+                    btn.innerHTML += `<div class="absolute top-0 right-0 bg-yellow-500 text-white text-[8px] px-1.5 py-0.5 rounded-bl-md font-bold">ÖZEL</div>`;
                 }
 
-                const label = isBlocked ? 'KAPALI' : dayName;
+                const label = isBlocked ? 'DOLU' : dayName;
                 btn.innerHTML += `
-                    <span class="text-xs font-bold uppercase mb-1 ${isBlocked ? '' : 'text-slate-400'}">${label}</span>
-                    <span class="text-xl font-bold">${dayNum} ${month}</span>
+                    <span class="text-[10px] font-bold uppercase mb-0.5 ${isBlocked ? '' : 'text-slate-400'}">${label}</span>
+                    <span class="text-lg font-bold leading-none">${dayNum} ${month}</span>
                 `;
                 btn.onclick = () => selectDate(dateStr);
                 grid.appendChild(btn);
@@ -365,7 +410,7 @@
                 const custom = globalSettings.customSchedules[bookingData.date];
                 start = custom.start;
                 end = custom.end;
-                badge.textContent = `Özel Saatler: ${start} - ${end}`;
+                badge.textContent = `${start}-${end}`;
                 badge.classList.remove('hidden');
             } else {
                 badge.classList.add('hidden');
@@ -390,8 +435,8 @@
                 btn.textContent = slot;
                 
                 let btnClass = `time-btn p-3 rounded-lg font-bold border transition-all text-center `;
-                if(isTaken) btnClass += 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed line-through';
-                else btnClass += 'bg-white border-slate-200 hover:border-custom hover:bg-custom-light text-slate-700';
+                if(isTaken) btnClass += 'bg-slate-100 text-slate-300 border-slate-100 cursor-not-allowed line-through decoration-slate-400';
+                else btnClass += 'bg-white border-slate-200 text-slate-700 active:scale-95';
                 
                 btn.className = btnClass;
                 btn.onclick = () => selectTime(slot);
@@ -403,7 +448,6 @@
             if (!user) {
                 signInAnonymously(auth).catch(console.error);
             } else {
-                // Ayarları Dinle
                 onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), (docSnap) => {
                     if (docSnap.exists()) {
                         const data = docSnap.data();
@@ -414,10 +458,9 @@
                         };
                         renderDateButtons();
                     } else {
-                        renderDateButtons(); // Veri yoksa varsayılan
+                        renderDateButtons(); 
                     }
                 });
-                // Randevuları Dinle
                 onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments')), (snap) => {
                     appointments = snap.docs.map(d => d.data());
                     if(bookingData.date) renderTimeSlots();
@@ -425,7 +468,6 @@
             }
         });
 
-        // Başlangıçta ikonları yükle
         lucide.createIcons();
     </script>
 </body>
