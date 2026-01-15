@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akademisyen Anne Anaokulu - Kayıt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* ÖZEL RENK AYARLARI */
+        :root {
+            --primary: #7cc939; 
+            --primary-hover: #6db333;
+        }
+        
+        .bg-custom { background-color: var(--primary); }
+        .bg-custom-hover:hover { background-color: var(--primary-hover); }
+        .text-custom { color: var(--primary); }
+        .border-custom { border-color: var(--primary); }
+        .ring-custom { --tw-ring-color: var(--primary); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-4 cursor-pointer" onclick="router('home')">
+                    <div class="h-14 flex items-center gap-3">
+                        <div class="w-12 h-12 bg-custom rounded-full flex items-center justify-center text-white shadow-md">
+                            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-slate-900 leading-none">Akademisyen Anne</h1>
+                            <p class="text-xs text-custom font-bold tracking-widest mt-1">ANAOKULU</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 relative">
+        
+        <!-- View: Home -->
+        <div id="view-home" class="view-section fade-in">
+            <div class="flex flex-col items-center justify-center py-12 text-center space-y-8">
+                <div class="space-y-6 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 bg-green-50 text-custom px-4 py-2 rounded-full text-sm font-bold mb-4">
+                        <i data-lucide="calendar" class="w-4 h-4"></i> 2024-2025 Erken Kayıt Dönemi
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        Geleceğin Akademisyenleri <br/>
+                        <span class="text-custom">Burada Yetişiyor</span>
+                    </h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                        Akademisyen Anne Anaokulu olarak çocuklarımıza bilimsel ve sevgi dolu bir eğitim sunuyoruz.
+                    </p>
+                </div>
+                <button onclick="router('booking')" class="bg-custom bg-custom-hover text-white font-bold py-4 px-10 rounded-xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 text-lg transform hover:-translate-y-1">
+                    <i data-lucide="calendar-check" class="w-6 h-6"></i>
+                    Randevu Oluştur
+                </button>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 w-full text-left">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                        <div class="mb-4 bg-slate-50 w-12 h-12 rounded-lg flex items-center justify-center text-custom"><i data-lucide="graduation-cap"></i></div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Akademik Eğitim</h3>
+                        <p class="text-slate-600 text-sm">Bilimsel temelli modern eğitim modelleri.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                        <div class="mb-4 bg-slate-50 w-12 h-12 rounded-lg flex items-center justify-center text-green-600"><i data-lucide="check-circle"></i></div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Kolay Kayıt</h3>
+                        <p class="text-slate-600 text-sm">Hızlı ve pratik online randevu sistemi.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                        <div class="mb-4 bg-slate-50 w-12 h-12 rounded-lg flex items-center justify-center text-slate-700"><i data-lucide="shield"></i></div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Güvenli Ortam</h3>
+                        <p class="text-slate-600 text-sm">Çocuklarınız için en güvenli alanlar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Booking -->
+        <div id="view-booking" class="view-section hidden fade-in">
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden max-w-3xl mx-auto">
+                <div class="bg-custom p-6 text-white flex justify-between items-center">
+                    <h3 class="text-xl font-bold flex items-center gap-2"><i data-lucide="calendar"></i> Randevu Formu</h3>
+                    <button onclick="router('home')" class="bg-white/10 hover:bg-white/20 p-2 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+                </div>
+                
+                <div class="p-8" id="booking-container">
+                    <!-- Steps Indicator -->
+                    <div class="flex items-center mb-8 text-sm font-bold text-slate-400">
+                        <div class="flex items-center gap-2 text-custom step-1-ind">
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-custom bg-green-50">1</span> Zaman
+                        </div>
+                        <div class="flex-1 h-0.5 bg-slate-200 mx-4"></div>
+                        <div class="flex items-center gap-2 step-2-ind">
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-slate-300">2</span> Veli
+                        </div>
+                        <div class="flex-1 h-0.5 bg-slate-200 mx-4"></div>
+                        <div class="flex items-center gap-2 step-3-ind">
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-slate-300">3</span> Öğrenci
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Date/Time -->
+                    <div id="step-1">
+                        <h4 class="font-bold text-lg text-slate-700 mb-3 flex items-center gap-2">
+                            <i data-lucide="calendar-days" class="w-5 h-5 text-slate-400"></i> Tarih Seçin
+                        </h4>
+                        <div id="date-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+                            <!-- JS ile doldurulacak -->
+                            <div class="col-span-3 text-center text-slate-400 py-4">Takvim yükleniyor...</div>
+                        </div>
+
+                        <div id="time-section" class="hidden animate-fadeIn">
+                            <h4 class="font-bold text-lg text-slate-700 mb-3 flex items-center gap-2 border-t pt-6">
+                                <i data-lucide="clock" class="w-5 h-5 text-slate-400"></i> Saat Seçin
+                                <span id="custom-hours-badge" class="hidden text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded ml-auto font-bold"></span>
+                            </h4>
+                            <div id="time-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-60 overflow-y-auto pr-1">
+                                <!-- JS ile doldurulacak -->
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end pt-6 mt-4 border-t">
+                            <button id="btn-step-1-next" onclick="nextStep(2)" disabled class="bg-custom bg-custom-hover text-white px-8 py-3 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all">Devam Et</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Parent Info -->
+                    <div id="step-2" class="hidden">
+                        <h4 class="font-bold text-lg border-b pb-2 mb-4">Veli Bilgileri</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" id="inp-parentName" placeholder="Veli Adı Soyadı *" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
+                            <input type="tel" id="inp-phone" placeholder="Telefon *" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
+                            <input type="email" id="inp-email" placeholder="E-posta" class="p-3 border rounded-lg w-full md:col-span-2 focus:ring-2 ring-custom outline-none">
+                        </div>
+                        <div class="flex justify-between pt-6">
+                            <button onclick="prevStep(1)" class="text-slate-500 font-bold px-4">Geri</button>
+                            <button onclick="nextStep(3)" class="bg-custom bg-custom-hover text-white px-6 py-3 rounded-lg font-bold">Devam Et</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Student Info -->
+                    <div id="step-3" class="hidden">
+                        <h4 class="font-bold text-lg border-b pb-2 mb-4">Öğrenci Bilgileri</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" id="inp-childName" placeholder="Öğrenci Adı Soyadı *" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
+                            <input type="date" id="inp-childBirthDate" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
+                            <select id="inp-gender" class="p-3 border rounded-lg w-full focus:ring-2 ring-custom outline-none">
+                                <option value="Belirtilmedi">Cinsiyet Seçiniz</option>
+                                <option value="Kız">Kız</option>
+                                <option value="Erkek">Erkek</option>
+                            </select>
+                            <textarea id="inp-notes" placeholder="Eklemek istediğiniz notlar var mı?" class="p-3 border rounded-lg w-full md:col-span-2 focus:ring-2 ring-custom outline-none" rows="3"></textarea>
+                        </div>
+                        <div class="flex justify-between pt-6">
+                            <button onclick="prevStep(2)" class="text-slate-500 font-bold px-4">Geri</button>
+                            <button onclick="submitBooking()" id="btn-submit" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-bold flex items-center gap-2">
+                                Randevuyu Onayla <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="notification" class="fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white transform transition-all duration-300 z-50 translate-y-20 opacity-0"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, doc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC-NozhF3X1NgX4ZSaXHMTR2n0vCoZbstY",
+            authDomain: "anaokulu-e728c.firebaseapp.com",
+            projectId: "anaokulu-e728c",
+            storageBucket: "anaokulu-e728c.firebasestorage.app",
+            messagingSenderId: "722320031337",
+            appId: "1:722320031337:web:cfaaa2bc2ae22e0fd0acf8",
+            measurementId: "G-L9V6S50C89"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'anaokulu-yonetim';
+
+        let globalSettings = { start: "09:00", end: "17:00", interval: "30", blockedDates: [], customSchedules: {} };
+        let appointments = [];
+        let bookingData = { date: '', time: '' };
+
+        const showToast = (msg, type = 'success') => {
+            const el = document.getElementById('notification');
+            el.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white transform transition-all duration-300 z-50 ${type === 'error' ? 'bg-red-600' : 'bg-green-600'}`;
+            el.textContent = msg;
+            el.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => el.classList.add('translate-y-20', 'opacity-0'), 3000);
+        };
+
+        window.router = (viewName) => {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            if(viewName === 'booking') renderDateButtons(); // Görünüm değişince tarihleri oluştur
+            lucide.createIcons();
+        };
+
+        window.nextStep = (step) => {
+            document.querySelectorAll('[id^="step-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+            if(step === 2) {
+                document.querySelector('.step-2-ind').classList.add('text-custom');
+                document.querySelector('.step-2-ind span').classList.replace('border-slate-300', 'border-custom');
+                document.querySelector('.step-2-ind span').classList.add('bg-green-50');
+            }
+            if(step === 3) {
+                document.querySelector('.step-3-ind').classList.add('text-custom');
+                document.querySelector('.step-3-ind span').classList.replace('border-slate-300', 'border-custom');
+                document.querySelector('.step-3-ind span').classList.add('bg-green-50');
+            }
+        };
+
+        window.prevStep = (step) => {
+            document.querySelectorAll('[id^="step-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+        };
+
+        window.selectDate = (dateStr) => {
+            bookingData.date = dateStr;
+            bookingData.time = '';
+            
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.className = `date-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all h-24 relative overflow-hidden bg-white border-slate-200 text-slate-600 hover:border-custom hover:bg-green-50`;
+            });
+            const selectedBtn = document.querySelector(`button[data-date="${dateStr}"]`);
+            if(selectedBtn) {
+                selectedBtn.className = `date-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all h-24 relative overflow-hidden bg-green-50 border-custom text-custom ring-2 ring-custom ring-offset-1 transform scale-105 shadow-md`;
+            }
+            renderTimeSlots();
+        };
+
+        window.selectTime = (timeStr) => {
+            bookingData.time = timeStr;
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                btn.className = `time-btn p-3 rounded-lg font-bold border transition-all text-center bg-white border-slate-200 hover:border-custom hover:bg-green-50 text-slate-700`;
+            });
+            const selectedBtn = document.querySelector(`button[data-time="${timeStr}"]`);
+            if(selectedBtn) {
+                selectedBtn.className = `time-btn p-3 rounded-lg font-bold border transition-all text-center bg-custom text-white border-transparent shadow-md`;
+            }
+            document.getElementById('btn-step-1-next').disabled = false;
+        };
+
+        window.submitBooking = async () => {
+            const btn = document.getElementById('btn-submit');
+            const pName = document.getElementById('inp-parentName').value;
+            const phone = document.getElementById('inp-phone').value;
+            if(!pName || !phone) return showToast('Lütfen zorunlu alanları doldurun', 'error');
+
+            btn.disabled = true;
+            btn.textContent = 'Kaydediliyor...';
+
+            const data = {
+                ...bookingData,
+                parentName: pName,
+                phone: phone,
+                email: document.getElementById('inp-email').value,
+                childName: document.getElementById('inp-childName').value,
+                childBirthDate: document.getElementById('inp-childBirthDate').value,
+                gender: document.getElementById('inp-gender').value,
+                notes: document.getElementById('inp-notes').value,
+                createdAt: new Date().toISOString(),
+                status: 'pending'
+            };
+
+            try {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'appointments'), data);
+                showToast('Randevunuz Başarıyla Oluşturuldu!');
+                setTimeout(() => location.reload(), 2000);
+            } catch (e) {
+                console.error(e);
+                showToast('Hata oluştu', 'error');
+                btn.disabled = false;
+            }
+        };
+
+        function renderDateButtons() {
+            const grid = document.getElementById('date-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            const today = new Date();
+            
+            for (let i = 0; i < 6; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + i);
+                const dateStr = d.toISOString().split('T')[0];
+                const dayNum = d.getDate();
+                const month = d.toLocaleDateString('tr-TR', { month: 'short' });
+                const dayName = d.toLocaleDateString('tr-TR', { weekday: 'long' });
+                
+                const isBlocked = globalSettings.blockedDates.includes(dateStr);
+                const hasCustom = globalSettings.customSchedules[dateStr];
+
+                const btn = document.createElement('button');
+                btn.dataset.date = dateStr;
+                btn.disabled = isBlocked;
+                
+                let btnClass = `date-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all h-24 relative overflow-hidden `;
+                if(isBlocked) btnClass += 'bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed';
+                else btnClass += 'bg-white border-slate-200 text-slate-600 hover:border-custom hover:bg-green-50';
+                
+                btn.className = btnClass;
+                
+                if (!isBlocked && hasCustom) {
+                    btn.innerHTML += `<div class="absolute top-0 right-0 bg-orange-500 text-white text-[9px] px-2 py-0.5 rounded-bl-lg font-bold">ÖZEL</div>`;
+                }
+
+                const label = isBlocked ? 'KAPALI' : dayName;
+                btn.innerHTML += `
+                    <span class="text-xs font-bold uppercase mb-1 ${isBlocked ? '' : 'text-slate-400'}">${label}</span>
+                    <span class="text-xl font-bold">${dayNum} ${month}</span>
+                `;
+                btn.onclick = () => selectDate(dateStr);
+                grid.appendChild(btn);
+            }
+        }
+
+        function renderTimeSlots() {
+            const container = document.getElementById('time-section');
+            const grid = document.getElementById('time-grid');
+            const badge = document.getElementById('custom-hours-badge');
+            container.classList.remove('hidden');
+            grid.innerHTML = '';
+
+            let start = globalSettings.start;
+            let end = globalSettings.end;
+            
+            if (globalSettings.customSchedules[bookingData.date]) {
+                const custom = globalSettings.customSchedules[bookingData.date];
+                start = custom.start;
+                end = custom.end;
+                badge.textContent = `Özel Saatler: ${start} - ${end}`;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            const slots = [];
+            let [sH, sM] = start.split(':').map(Number);
+            let [eH, eM] = end.split(':').map(Number);
+            let current = new Date(); current.setHours(sH, sM, 0, 0);
+            let endTime = new Date(); endTime.setHours(eH, eM, 0, 0);
+
+            while (current < endTime) {
+                slots.push(current.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', hour12: false }));
+                current.setMinutes(current.getMinutes() + parseInt(globalSettings.interval));
+            }
+
+            slots.forEach(slot => {
+                const isTaken = appointments.some(a => a.date === bookingData.date && a.time === slot);
+                const btn = document.createElement('button');
+                btn.dataset.time = slot;
+                btn.disabled = isTaken;
+                btn.textContent = slot;
+                
+                let btnClass = `time-btn p-3 rounded-lg font-bold border transition-all text-center `;
+                if(isTaken) btnClass += 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed line-through';
+                else btnClass += 'bg-white border-slate-200 hover:border-custom hover:bg-green-50 text-slate-700';
+                
+                btn.className = btnClass;
+                btn.onclick = () => selectTime(slot);
+                grid.appendChild(btn);
+            });
+        }
+
+        // Auth & Listeners
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                signInAnonymously(auth).catch(console.error);
+            } else {
+                // Settings Listener
+                onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        globalSettings = { 
+                            ...data, 
+                            blockedDates: data.blockedDates || [], 
+                            customSchedules: data.customSchedules || {} 
+                        };
+                        renderDateButtons(); // Re-render dates with new settings
+                    } else {
+                        // DB Boşsa Varsayılanları Yükle
+                        renderDateButtons(); 
+                    }
+                });
+                // Appointments Listener
+                onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments')), (snap) => {
+                    appointments = snap.docs.map(d => d.data());
+                    if(bookingData.date) renderTimeSlots(); // Refresh times if date selected
+                });
+            }
+        });
+
+        // Initialize UI (İlk açılışta boş görünmemesi için)
+        renderDateButtons(); 
+        lucide.createIcons();
+    </script>
+</body>
+</html>
